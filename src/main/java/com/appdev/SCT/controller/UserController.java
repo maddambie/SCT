@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.appdev.SCT.model.Teacher;
+import com.appdev.SCT.service.TeacherService;
 import com.appdev.SCT.model.Course;
 import com.appdev.SCT.model.User;
 import com.appdev.SCT.repository.CourseRepository;
@@ -118,6 +120,22 @@ public class UserController {
 		    @PostMapping("/register")
 		    public String registration(@ModelAttribute("user") User user) {
 		        userService.save(user);
+		        return "redirect:/success";
+		    }
+		    
+		    //teacher
+		    @Autowired
+		    private TeacherService teacherService;
+
+		    @GetMapping("/teacherReg")
+		    public String showTeacherRegistrationForm(Model model) {
+		        model.addAttribute("teacher", new Teacher());
+		        return "teacherReg";
+		    }
+
+		    @PostMapping("/teacherReg")
+		    public String registerTeacher(@ModelAttribute("teacher") Teacher teacher) {
+		        teacherService.registerTeacher(teacher);
 		        return "redirect:/success";
 		    }
 		    
