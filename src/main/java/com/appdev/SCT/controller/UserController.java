@@ -113,6 +113,8 @@ public class UserController {
 		        return "registration";
 		    }
 
+		    
+		    
 		    @PostMapping("/register")
 		    public String registration(@ModelAttribute("user") User user) {
 		        userService.save(user);
@@ -120,7 +122,7 @@ public class UserController {
 		    }
 		    
 		    
-		    
+		   
 
 		    // Method for registering a new user (POST request)
 
@@ -154,7 +156,28 @@ public class UserController {
 		    }	
 
 	
-		    
+		    @PostMapping("ChangePassword")
+		    public String changePassword(@RequestParam String currentPassword,
+		                                 @RequestParam String newPassword,
+		                                 @RequestParam String confirmPassword,
+		                                 HttpSession session,
+		                                 Model model, RedirectAttributes redirectAttributes) {
+		    	String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
+				if (studentId != null) {
+					User user = userService.findBystudentid(studentId);
+
+			        user.setPassword((newPassword));
+			        userService.save(user);
+			        redirectAttributes.addFlashAttribute("message", "Password changed successfully.");
+			        model.addAttribute("user", user);
+			        return "redirect:/account";
+				} else {
+				    return "redirect:/login";
+				}
+		        
+		        
+		    }
+		   
 		    
 	    
 		    @PostMapping("/loginval")

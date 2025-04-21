@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ChangePassword</title>
 <link rel="stylesheet" href="/account.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -12,30 +12,25 @@
         <h2>Account Settings</h2>
 
         <div class="account-info">
-            <div class="profile-section">
-                <img src="profile-placeholder.png" alt="Profile Picture" class="profile-pic">
-                <button class="edit-btn">Change Photo</button>
-            </div>
-
+			<div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
             <div class="details-section">
                 <p><strong>Full Name:</strong> <span th:text="${user.fullname}"></span></p>
                 <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
                 <p><strong>Role:</strong> <span id="role">Student</span></p>
-                <button class="edit-btn">Edit Info</button>
             </div>
         </div>
 
         <div class="password-update">
             <h3>Change Password</h3>
-            <form id="passwordForm">
+            <form action="ChangePassword" method="post">
                 <label for="current-password">Current Password:</label>
-                <input type="password" id="current-password" required>
+                <input type="password" id="current-password" name="currentPassword" required>
 
                 <label for="new-password">New Password:</label>
-                <input type="password" id="new-password" required>
+                <input type="password" id="new-password" name="newPassword" required>
 
                 <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" required>
+                <input type="password" id="confirm-password" name="confirmPassword" required>
 
                 <button id="submit" type="button" class="update-btn">Update Password</button>
             </form>
@@ -60,6 +55,7 @@ let confirmPassword = document.getElementById("confirm-password");
 $(document).ready(function(){
 	$("#current-password").keyup(function(){
 		if(hiddenpass.value != currentPassword.value){
+		
 			$("#submit").attr("type", "button");
 		}
 		else{
@@ -69,13 +65,14 @@ $(document).ready(function(){
 	
 	$("#submit").click(function(){
 		
-		if($("#submit").attr("type") == "button"){
-			alert($("#submit").attr("type"));
-		}
-		else{
-			alert("Correct Password");
-		}
-		
+			if(newPassword.value == confirmPassword.value && hiddenpass.value == currentPassword.value){
+
+				$("#submit").attr("type", "submit");
+			}
+			else{
+
+				$("#submit").attr("type", "button");
+			}
 		
 	});
 });
