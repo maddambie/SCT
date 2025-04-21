@@ -115,6 +115,20 @@ public class UserController {
 		        return "registration";
 		    }
 
+		    @GetMapping("/index")
+		    public String index() {
+		        return "index";
+		    }
+		    
+		    @GetMapping("/teacherlogin")
+		    public String teacher() {
+		        return "teacherlogin";
+		    }
+		    @GetMapping("/adminlogin")
+		    public String admin() {
+		        return "adminlogin";
+		    }
+		    
 		    
 		    
 		    @PostMapping("/register")
@@ -210,7 +224,7 @@ public class UserController {
 		            return "redirect:/welcome";  //
 		        } else {
 		            // If login fails, return to login page with error message
-		            model.addAttribute("error", "Invalid Student ID or Password.");
+		            model.addAttribute("error", "Wrong Credential.");
 		            return "/login";
 		        }
 		    }
