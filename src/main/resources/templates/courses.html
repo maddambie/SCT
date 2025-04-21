@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+    <link rel="stylesheet" href="/welcome.css"> 
+</head>
+<body>
+    <header>
+        <h2>Welcome <span th:text="${user.fullname}"></span></h2>
+        <nav class="navbar">
+    <div class="nav-menu">
+        <nav>
+  
+    <ul>
+        <li><a href="welcome">Home</a></li>
+        <li><a class="selected" style="color:black" href="#">Courses</a></li>
+        <li><a href="#">Curriculum</a></li>
+        <li><a href="#">Progress</a></li>
+        <li><a href="account">Account</a></li>
+        <li><a href="#">Logout</a></li>
+    </ul>
+</nav>
+    </div>
+</nav>
+
+    </header>
+
+    <main>
+		<h2>Available Courses</h2>
+		<table border="1">
+		    <thead>
+		        <tr>
+		            <!--<th>Course ID</th>
+		            <th>Course Name</th>
+		            <th>Description</th>-->
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="course : ${courses}">
+		           
+		            <td th:text="|${course.degree}'s Degree|"></td> 
+		            <td th:text="${course.course}"></td>
+		            <td th:text="${course.department}"></td>
+		            <td th:text="${course.program}"></td>
+		        </tr>
+		    </tbody>
+		</table>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Student Curriculum Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>

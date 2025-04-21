@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Users</title>
+
+<input type="hidden" name="_csrf" value="${_csrf.token}" />
+</head>
+<body>
+	<h2>User List</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Loop through users and display data -->
+            <tr th:each="users : ${users}">
+                  <td th:text="${users.studentid}"></td>
+                <td th:text="${users.fullname}"></td>
+                <td th:text="${users.email}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
