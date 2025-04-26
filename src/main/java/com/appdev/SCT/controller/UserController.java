@@ -87,9 +87,10 @@ public class UserController {
 
 
 		    
-		    @GetMapping("/login")
-		    public String showloginForm(Model model) {
+		    @PostMapping("/login")
+		    public String showloginForm(@RequestParam String hiddenValue, Model model) {
 		        model.addAttribute("user", new User());
+		        model.addAttribute("hiddenValue", hiddenValue);
 		        return "login";
 		    }
 		    
@@ -109,7 +110,7 @@ public class UserController {
 		    @Autowired
 		    private UserService userService;
 		    
-		    @GetMapping("/register")
+		    @GetMapping("/register/Student")
 		    public String showStudentRegistrationForm(Model model) {
 		        model.addAttribute("user", new User());
 		        return "registration";
@@ -120,38 +121,31 @@ public class UserController {
 		        return "index";
 		    }
 		    
-		    @GetMapping("/teacherlogin")
-		    public String teacher() {
-		        return "teacherlogin";
-		    }
-		    @GetMapping("/adminlogin")
-		    public String admin() {
-		        return "adminlogin";
-		    }
+
 		    
 		    
 		    
-		    @PostMapping("/register")
+		    /*@PostMapping("/register")
 		    public String registration(@ModelAttribute("user") User user) {
 		        userService.save(user);
 		        return "redirect:/success";
-		    }
+		    }*/
 		    
 		    //teacher
 		    @Autowired
 		    private TeacherService teacherService;
 
-		    @GetMapping("/teacherReg")
+		    @GetMapping("/register/Teacher")
 		    public String showTeacherRegistrationForm(Model model) {
 		        model.addAttribute("teacher", new Teacher());
 		        return "teacherReg";
 		    }
 
-		    @PostMapping("/teacherReg")
+		    /*@PostMapping("/teacherReg")
 		    public String registerTeacher(@ModelAttribute("teacher") Teacher teacher) {
 		        teacherService.registerTeacher(teacher);
 		        return "redirect:/success";
-		    }
+		    }*/
 		    
 		    
 		   

@@ -17,7 +17,7 @@
         	<input type="hidden" name="_csrf" value="${_csrf.token}" />
         
         
-            <i class="fas fa-user"> Student Id:</i>
+            <i class="fas fa-user"><span th:text="${hiddenValue}"> Id:</i></span>
             <input type="text" id="studentid" name="studentid" required />
             
             <i class="fas fa-lock"> Password:</i>
@@ -27,7 +27,7 @@
          	
             <button>Login</button>
               
-            <p>Don’t have an account? <a href="/register">Sign Up!</a></p>
+            <p>Don’t have an account? <a th:href="@{/register/{value}(value=${hiddenValue})}">Register</a></p>
             
              <div class="separator"><span>-------------------------------------OR-------------------------------------</span></div>
         
