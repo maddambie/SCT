@@ -9,11 +9,12 @@
 </head>
 <body>
    <div class="form-container">
-   		<form action="loginval" method="POST">
+   		<form th:action="@{/login/{value}(value=${hiddenValue})}" method="POST">
    		<div id="msg"> 
            	<span th:text="${error}"></span>
            </div>
         <h1>Login Form</h1>
+        	<input type="hidden" name="hiddenValue" id="hiddenValue" th:value="${hiddenValue}">
         	<input type="hidden" name="_csrf" value="${_csrf.token}" />
         
         
