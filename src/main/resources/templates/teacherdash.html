@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Teacher Dashboard - SCT</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+ <form action="/teacherdash" method="post">
+    <h1>Welcome, <span th:text="${teacherName}"></span>!</h1>
+
+    <div class="dashboard">
+        <a href="/teacher/classes">My Classes</a>
+        <a href="/teacher/assignments">Assignments</a>
+        <a href="/teacher/students">Student Progress</a>
+        <a href="/teacher/curriculum">Curriculum Planner</a>
+        <a href="/teacher/announcements">Announcements</a>
+    </div>
+    
+    
+</body>
+</html>
