@@ -166,6 +166,13 @@ public class UserController {
 		        
 		    }	
 		    
+		    @PostMapping("/teacher/dash")
+		    public String teacherHome(Model model) {
+		        model.addAttribute("teacherName", "Mr. John Doe"); // Replace with real session info
+		        return "teacherdash"; // teacher_home.html in templates folder
+		    }
+		    
+		    
 		    @PostMapping("/user/save")
 		    public String handleForm(@RequestParam String studentid, @RequestParam String email,@RequestParam String department,@RequestParam String yearlevel, @RequestParam String studentName, @RequestParam String password, @RequestParam String program, Model model) {
 		    	{
