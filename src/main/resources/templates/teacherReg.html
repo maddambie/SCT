@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Registration Form</title>
+    <link rel="stylesheet" href="/register.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<<<<<<< HEAD
+    <h1>Teacher Registration Form</h1>
+    <form method="post" action="/teacher/save">
+
+		<input limit="15" type="text" placeholder="TeacherId" name="TeacherId" id="TeacherId" required><br>
+        <input type="text" placeholder="Full Name" name="fullName" id="fullname" required><br>
+        <input type="email" placeholder="Email" name="email" id="email"required><br>
+        <input type="text" placeholder="Phone Number" id="phone" name="phone" required><br>
+=======
+    <div class="form-container">
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+        
+        <h1>Teacher Registration Form</h1>
+        <p>Already registered? <a href="/login">Login!</a></p>
+
+        <div id="msg">
+            <p id="validate"></p>
+            <span th:text="${facultyid}"></span>
+        </div>
+>>>>>>> 334083628085b69f408c8307b5a7e3982bf95a3a
+
+        <form action="/teacher/save" method="post">
+        	<label for="teacherId">Teacher ID</label>
+            <input type="text" placeholder="Teacher Id" name="teacherId" id="teacherId" required>
+        
+            <label for="fullName">Full Name:</label>
+            <input type="text" placeholder="Full Name" name="fullN" id=""fullN"" required>
+
+            <label for="email">Email:</label>
+            <input type="email" placeholder="Email" name="email" id="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" placeholder="Phone Number" name="phone" id="phone" required>
+
+            <label for="department">Department:</label>
+            <select id="department" name="department" required>
+                <option value="">-- Select Department --</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Mathematics">Mathematics</option>
+            </select>
+
+            <label for="FacultyID">Faculty ID:</label>
+            <input type="text" placeholder="Faculty ID" name="facultyId" id="facultyId" required>
+
+            <label for="Password">Password:</label>
+            <input type="password" placeholder="Password" name="Password" id="password" required>
+
+            <label for="ConfirmPassword">Confirm Password:</label>
+            <input type="password" placeholder="Confirm Password" name="ConfirmPassword" id="ConfirmPassword" required>
+
+            <label for="EducationalBackground">Educational Background:</label>
+            <textarea placeholder="Educational Background" name="eduBack" id="eduBack"></textarea>
+
+            <label for="experience">Years of Experience:</label>
+            <input type="number" placeholder="Years of Experience" name="experience" id="experience">
+
+            <button id="submit" type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+    $(document).ready(function(){
+        let p1 = document.getElementById("password");
+        let p2 = document.getElementById("ConfirmPassword");
+        $("#ConfirmPassword").keyup(function(){
+            if(p1.value !== p2.value){
+                document.getElementById("validate").innerHTML = "Password not matched";
+                $("#submit").attr("type", "button");
+            } else {
+                document.getElementById("validate").innerHTML = "";
+                $("#submit").attr("type", "submit");
+            }
+        });
+    });
+    </script>
+</body>
+</html>
