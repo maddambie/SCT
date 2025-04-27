@@ -33,7 +33,7 @@ public class UserController {
 			@Autowired
 			private CourseRepository CourseRepository;
 			@Autowired
-			private TeacherRepository TeacherRepository;
+			private TeacherRepository teacherRepository;
 			
 			@GetMapping("/")
 				public String showWelcomePage(HttpSession session, Model model) {
@@ -155,13 +155,13 @@ public class UserController {
 		        try {
 		        	
 		        	Teacher teacher = new Teacher(teacherId, fullN, phone, email, department, facultyId, password, eduBack, experience);
-		        	TeacherRepository.save(teacher);
+		        	teacherRepository.save(teacher);
 			       
 		            return "success";
 		        }
 		        catch(Exception e) {
 		        	model.addAttribute("error", "Error: " + e.getMessage());
-		            return "/registration";
+		            return "/teacherReg";
 		        }
 		        
 		    }	

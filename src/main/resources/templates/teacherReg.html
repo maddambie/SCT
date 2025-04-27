@@ -9,6 +9,8 @@
 </head>
 <body>
 
+
+
     <div class="form-container">
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
         
@@ -21,12 +23,12 @@
         </div>
 
 
-        <form action="/teacher/save" method="post">
+        <form action="/teacher/save" method="POST">
         	<label for="teacherId">Teacher ID</label>
             <input type="text" placeholder="Teacher Id" name="teacherId" id="teacherId" required>
         
             <label for="fullName">Full Name:</label>
-            <input type="text" placeholder="Full Name" name="fullN" id=""fullN"" required>
+            <input type="text" placeholder="Full Name" name="fullN" id="fullN" required>
 
             <label for="email">Email:</label>
             <input type="email" placeholder="Email" name="email" id="email" required>
@@ -46,7 +48,7 @@
             <input type="text" placeholder="Faculty ID" name="facultyId" id="facultyId" required>
 
             <label for="Password">Password:</label>
-            <input type="password" placeholder="Password" name="Password" id="password" required>
+            <input type="password" placeholder="Password" name="password" id="password" required>
 
             <label for="ConfirmPassword">Confirm Password:</label>
             <input type="password" placeholder="Confirm Password" name="ConfirmPassword" id="ConfirmPassword" required>
