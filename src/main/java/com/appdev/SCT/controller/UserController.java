@@ -18,6 +18,7 @@ import com.appdev.SCT.service.TeacherService;
 import com.appdev.SCT.model.Course;
 import com.appdev.SCT.model.User;
 import com.appdev.SCT.repository.CourseRepository;
+import com.appdev.SCT.repository.TeacherRepository;
 import com.appdev.SCT.repository.UserRepository;
 import com.appdev.SCT.service.CourseService;
 import com.appdev.SCT.service.UserService;
@@ -31,7 +32,8 @@ public class UserController {
 			private UserRepository UserRepository;
 			@Autowired
 			private CourseRepository CourseRepository;
-			
+			@Autowired
+			private TeacherRepository TeacherRepository;
 			
 			@GetMapping("/")
 				public String showWelcomePage(HttpSession session, Model model) {
@@ -127,17 +129,6 @@ public class UserController {
 		        return "index";
 		    }
 		    
-
-		    
-		    
-		    
-		    /*@PostMapping("/register")
-		    public String registration(@ModelAttribute("user") User user) {
-		        userService.save(user);
-		        return "redirect:/success";
-		    }*/
-		    
-		    //teacher
 		    @Autowired
 		    private TeacherService teacherService;
 
@@ -146,19 +137,34 @@ public class UserController {
 		        model.addAttribute("teacher", new Teacher());
 		        return "teacherReg";
 		    }
-
-		    /*@PostMapping("/teacherReg")
-		    public String registerTeacher(@ModelAttribute("teacher") Teacher teacher) {
-		        teacherService.registerTeacher(teacher);
-		        return "redirect:/success";
-		    }*/
 		    
-		    
-		   
-
-		    // Method for registering a new user (POST request)
-
-		   
+		    @PostMapping("/teacher/save")
+		    public String handleForm(@RequestParam String teacherId, @RequestParam String fullN,@RequestParam String email,@RequestParam String phone, @RequestParam String department, @RequestParam String facultyId, @RequestParam String password, @RequestParam String eduBack, @RequestParam int experience, Model model) {
+		    	{
+		    		model.addAttribute("message", "Success");
+		    	}
+		        model.addAttribute("teacherId", teacherId);
+		        model.addAttribute("fullN", fullN);
+		        model.addAttribute("email", email);
+		        model.addAttribute("phone", phone);
+		        model.addAttribute("department", department);
+		        model.addAttribute("facultyId", facultyId);
+		        model.addAttribute("password", password);
+		        model.addAttribute("eduBack", eduBack);
+		        model.addAttribute("experience", experience);
+		        try {
+		        	
+		        	Teacher teacher = new Teacher(teacherId, fullN, phone, email, department, facultyId, password, eduBack, experience);
+		        	TeacherRepository.save(teacher);
+			       
+		            return "success";
+		        }
+		        catch(Exception e) {
+		        	model.addAttribute("error", "Error: " + e.getMessage());
+		            return "/registration";
+		        }
+		        
+		    }	
 		    
 		    @PostMapping("/user/save")
 		    public String handleForm(@RequestParam String studentid, @RequestParam String email,@RequestParam String department,@RequestParam String yearlevel, @RequestParam String studentName, @RequestParam String password, @RequestParam String program, Model model) {

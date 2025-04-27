@@ -5,8 +5,9 @@
 </head>
 <body>
     <h1>Teacher Registration Form</h1>
-    <form method="post">
+    <form method="post" action="/teacher/save">
 
+		<input limit="15" type="text" placeholder="TeacherId" name="TeacherId" id="TeacherId" required><br>
         <input type="text" placeholder="Full Name" name="fullName" id="fullname" required><br>
         <input type="email" placeholder="Email" name="email" id="email"required><br>
         <input type="text" placeholder="Phone Number" id="phone" name="phone" required><br>

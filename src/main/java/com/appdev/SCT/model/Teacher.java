@@ -14,22 +14,42 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName;
+    private String teacherId;
+    private String fullN;
     private String email;
     private String phone;
     private String department;
     private String facultyId;
     private String password;
-    private String educationalBackground;
+    private String eduBack;
     private int experience;
     
-    
-    // Getters and Setters
+    public Teacher() {}
+    // ✅ Parameterized constructor
+    public Teacher(String teacherId, String fullN, String email, String phone, String department, String facultyId, String password, String eduBack, int experience) {
+        this.teacherId = teacherId;
+        this.fullN = fullN;
+        this.email = email;
+        this.phone = phone;
+        this.department = department;
+        this.facultyId = facultyId;
+        this.password = password;
+        this.eduBack = eduBack;
+        this.experience = experience;
+    }
+      
+    // Getters and Setters     
+    public String getteacherId() {
+    	return teacherId; 
+    }
+    public void setteacherId(String teacherId) {
+    	this.teacherId = teacherId;
+    }
 	public String getFullName() {
-		return fullName;
+		return fullN;
 	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFullName(String fullN) {
+		this.fullN = fullN;
 	}
 	public String getEmail() {
 		return email;
@@ -62,10 +82,10 @@ public class Teacher {
 		this.password = password;
 	}
 	public String getEducationalBackground() {
-		return educationalBackground;
+		return eduBack;
 	}
-	public void setEducationalBackground(String educationalBackground) {
-		this.educationalBackground = educationalBackground;
+	public void setEducationalBackground(String eduBack) {
+		this.eduBack = eduBack;
 	}
 	public int getExperience() {
 		return experience;
