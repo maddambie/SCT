@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<<<<<<< HEAD
+
     <meta charset="UTF-8">
     <title>Teacher Registration Form</title>
     <link rel="stylesheet" href="/register.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
-<<<<<<< HEAD
-    <h1>Teacher Registration Form</h1>
-    <form method="post" action="/teacher/save">
 
-		<input limit="15" type="text" placeholder="TeacherId" name="TeacherId" id="TeacherId" required><br>
-        <input type="text" placeholder="Full Name" name="fullName" id="fullname" required><br>
-        <input type="email" placeholder="Email" name="email" id="email"required><br>
-        <input type="text" placeholder="Phone Number" id="phone" name="phone" required><br>
-=======
     <div class="form-container">
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
         
@@ -27,7 +19,7 @@
             <p id="validate"></p>
             <span th:text="${facultyid}"></span>
         </div>
->>>>>>> 334083628085b69f408c8307b5a7e3982bf95a3a
+
 
         <form action="/teacher/save" method="post">
         	<label for="teacherId">Teacher ID</label>
@@ -86,44 +78,4 @@
     </script>
 </body>
 </html>
-=======
-    <title>Teacher Registration Form</title>
-</head>
-<body>
-    <h1>Teacher Registration Form</h1>
-    <form method="post" th:action="@{/teacher/register}" th:object="${teacher}" enctype="multipart/form-data">
-
-        <input type="text" placeholder="Full Name" th:field="*{fullName}" required><br>
-        <input type="email" placeholder="Email" th:field="*{email}" required><br>
-        <input type="text" placeholder="Phone Number" th:field="*{phone}" required><br>
-
-        <select th:field="*{department}" required>
-            <option value="Computer Science">Computer Science</option>
-            <option value="Information Technology">Information Technology</option>
-            <option value="Mathematics">Mathematics</option>
-        </select><br>
-
-        <input type="text" placeholder="Faculty ID" th:field="*{facultyId}" required><br>
-        <input type="password" placeholder="Password" th:field="*{password}" required><br>
-
-        <textarea placeholder="Educational Background" th:field="*{educationalBackground}"></textarea><br>
-        <input type="number" placeholder="Years of Experience" th:field="*{experience}"><br>
-
-        <label>Upload Profile Picture:</label>
-        <input type="file" th:field="*{profilePicture}"><br>
-
-        <label>Select Courses to Handle:</label>
-        <select th:field="*{courses}" multiple>
-            <option value="Java">Java</option>
-            <option value="Python">Python</option>
-            <option value="Database Management">Database Management</option>
-        </select><br>
-
-        <label>Upload Verification Document (ID Proof):</label>
-        <input type="file" th:field="*{verificationDocument}"><br>
-
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
->>>>>>> 658625cb957caa24c49df19658f824b459fa0036
+   
