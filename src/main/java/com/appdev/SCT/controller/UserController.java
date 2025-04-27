@@ -218,8 +218,8 @@ public class UserController {
 		   
 		    
 	    
-		    @PostMapping("/loginval")
-		    public String loginUser(@RequestParam String studentid, @RequestParam String password, Model model,  HttpSession session) {
+		    @PostMapping("/login/Student")
+		    public String loginUser(@RequestParam String studentid, @RequestParam String password,@RequestParam String hiddenValue, Model model,  HttpSession session) {
 		        User user = userService.findUsersByStudentidAndPassword(studentid, password);
 
 		        if (user != null) {
@@ -231,9 +231,29 @@ public class UserController {
 		        } else {
 		            // If login fails, return to login page with error message
 		            model.addAttribute("error", "Wrong Credential.");
+		            model.addAttribute("hiddenValue", hiddenValue);
 		            return "/login";
 		        }
 		    }
+		    
+		    @PostMapping("/login/Teacher")
+		    public String loginTeacher(@RequestParam String studentid, @RequestParam String password,@RequestParam String hiddenValue, Model model,  HttpSession session) {
+		        Teacher teacher = teacherService.findByTeacherIdAndPassword(studentid, password);
+
+		        if (teacher != null) {
+		            // If login is successful, redirect to dashboard page
+		            model.addAttribute("teacher", teacher);
+		            session.setAttribute("loggedInUser", teacher.getFullName());
+		            session.setAttribute("studentid", teacher.getteacherId());
+		            return "redirect:/welcome";  //
+		        } else {
+		            // If login fails, return to login page with error message
+		            model.addAttribute("error", "Wrong Credential.");
+		            model.addAttribute("hiddenValue", hiddenValue);
+		            return "/login";
+		        }
+		    }
+		    
 	}
 
 		
