@@ -24,7 +24,7 @@ public class TeacherService {
     	TeacherRepository.findAll();
     }
     
-    public Teacher findBystudentid(String teacherId) {
+    public Teacher findByteacherId(String teacherId) {
         return TeacherRepository.findByteacherId(teacherId); // Fetch user from database
     }
    public Teacher findByTeacherIdAndPassword(String teacherId, String password) {

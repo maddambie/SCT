@@ -59,6 +59,18 @@ public class UserController {
 				}
 		}
 			
+		    @GetMapping("/teacher/dash")
+		    public String teacherHome(HttpSession session, Model model) {
+				String teacherId = (String) session.getAttribute("studentid"); // Get user ID from session
+				if (teacherId != null) {
+				    Teacher teacher = teacherService.findByteacherId(teacherId); // Fetch user from database
+				    model.addAttribute("teacher", teacher);
+				    return "teacherdash";
+				} else {
+				    return "redirect:/login";
+				}
+		}
+		    
 			
 			@GetMapping("/courses")
 			public String courses(HttpSession session, Model model) {
@@ -74,6 +86,9 @@ public class UserController {
 				    return "redirect:/login";
 				}
 		}
+			
+			
+			
 			
 			
 			@GetMapping("/account")
@@ -166,12 +181,7 @@ public class UserController {
 		        
 		    }	
 		    
-		    @PostMapping("/teacher/dash")
-		    public String teacherHome(Model model) {
-		        model.addAttribute("teacherName", "Mr. John Doe"); // Replace with real session info
-		        return "teacherdash"; // teacher_home.html in templates folder
-		    }
-		    
+
 		    
 		    @PostMapping("/user/save")
 		    public String handleForm(@RequestParam String studentid, @RequestParam String email,@RequestParam String department,@RequestParam String yearlevel, @RequestParam String studentName, @RequestParam String password, @RequestParam String program, Model model) {
@@ -252,7 +262,7 @@ public class UserController {
 		            model.addAttribute("teacher", teacher);
 		            session.setAttribute("loggedInUser", teacher.getFullName());
 		            session.setAttribute("studentid", teacher.getteacherId());
-		            return "redirect:/welcome";  //
+		            return "redirect:/teacher/dash";  //
 		        } else {
 		            // If login fails, return to login page with error message
 		            model.addAttribute("error", "Wrong Credential.");

@@ -6,7 +6,7 @@
 </head>
 <body>
  <form action="/teacherdash" method="post">
-    <h1>Welcome, <span th:text="${teacherName}"></span>!</h1>
+    <h1>Welcome, <span th:text="${teacher.fullName}"></span>!</h1>
 
     <div class="dashboard">
         <a href="/teacher/classes">My Classes</a>
