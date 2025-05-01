@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Courses</title>
-    <link rel="stylesheet" href="/welcome.css"> 
+    <link rel="stylesheet" href="/welcome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -28,7 +29,7 @@
 
     <main>
 		<h2>Available Courses</h2>
-		<table border="1">
+		<center><table border="1">
 		    <thead>
 		        <tr>
 		            <!--<th>Course ID</th>
@@ -39,13 +40,11 @@
 		    <tbody>
 		        <tr th:each="course : ${courses}">
 		           
-		            <td th:text="|${course.degree}'s Degree|"></td> 
-		            <td th:text="${course.course}"></td>
-		            <td th:text="${course.department}"></td>
-		            <td th:text="${course.program}"></td>
+				<td th:text="|${course.degree}'s Degree - ${course.course}, ${course.department}, ${course.program}|"></td>
+			    <td><button th:value="${course.id}" onclick="loadDesc(this.value)">More</button></td>
 		        </tr>
 		    </tbody>
-		</table>
+		</table></center>
     </main>
 
     <footer>
@@ -53,3 +52,18 @@
     </footer>
 </body>
 </html>
+
+<script>
+  function loadDesc(id) {
+	  
+	  $.ajax({
+	      url: `/api/courses`,
+	      type: 'POST',
+	      data: { id: id },
+	      success: function(data) {
+	        alert(data);
+	       
+	      }
+	    });
+  }
+</script>
