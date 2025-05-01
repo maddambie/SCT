@@ -38,10 +38,10 @@
 
             <label for="department">Department:</label>
             <select id="department" name="department" required>
-                <option value="">-- Select Department --</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Information Technology">Information Technology</option>
-                <option value="Mathematics">Mathematics</option>
+                <option value="" disabled selected>--Select Department--</option>
+                <option th:each="course : ${courses}" 
+                th:value="${course.id}" 
+                th:text="${course.course}">Course</option>
             </select>
 
             <label for="FacultyID">Faculty ID:</label>

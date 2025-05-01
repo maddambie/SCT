@@ -91,3 +91,38 @@ footer {
 .selected {
 	color:black; 	
 }
+
+
+
+table {
+  width: 50%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  background-color: #fff0f0;
+  color: #660000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ffcccc;
+}
+
+th {
+  background-color: #cc0000;
+  color: white;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #ffe5e5;
+}
+
+tr:hover {
+  background-color: #ffd6d6;
+}
+

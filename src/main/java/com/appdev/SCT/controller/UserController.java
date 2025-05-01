@@ -34,6 +34,11 @@ public class UserController {
 			private CourseRepository CourseRepository;
 			@Autowired
 			private TeacherRepository teacherRepository;
+			@Autowired
+		    private UserService userService;
+			@Autowired
+		    private CourseService CourseService;
+			
 			
 			@GetMapping("/")
 				public String showWelcomePage(HttpSession session, Model model) {
@@ -136,8 +141,7 @@ public class UserController {
 		        
 		    }*/
 
-		    @Autowired
-		    private UserService userService;
+		    
 		    
 		    @GetMapping("/register/Student")
 		    public String showStudentRegistrationForm(Model model) {
@@ -156,7 +160,11 @@ public class UserController {
 		    @GetMapping("/register/Teacher")
 		    public String showTeacherRegistrationForm(Model model) {
 		        model.addAttribute("teacher", new Teacher());
+		        model.addAttribute("courses", CourseRepository.findAll());
+		        
 		        return "teacherReg";
+		        
+		        
 		    }
 		    
 		    @PostMapping("/teacher/save")
@@ -175,11 +183,11 @@ public class UserController {
 		        model.addAttribute("experience", experience);
 		        try {
 		        	
-		        	Teacher teacher = new Teacher(teacherId, fullN, phone, email, department, facultyId, password, eduBack, experience);
+		        	Teacher teacher = new Teacher(teacherId, fullN, email, phone, department, facultyId, password, eduBack, experience);
 		        	teacherRepository.save(teacher);
 			       
 		            return "success";
-		        }
+		        } 	
 		        catch(Exception e) {
 		        	model.addAttribute("error", "Error: " + e.getMessage());
 		            return "/teacherReg";
@@ -275,6 +283,14 @@ public class UserController {
 		            model.addAttribute("hiddenValue", hiddenValue);
 		            return "/login";
 		        }
+		    }
+		    
+		    @PostMapping("/api/courses")
+		    public String getCourses(@RequestParam int id, Model model ) {
+		    	Course course = CourseService.findById(id);
+		        model.addAttribute("course", course);
+				return "/loadDesc";
+		    	
 		    }
 		    
 	}
