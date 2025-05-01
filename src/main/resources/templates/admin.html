@@ -6,15 +6,32 @@
 </head>
 <body>
 
- <form action="/admin" method="post">
-    <h1>Welcome, Admin!</h1>
+ <form action="/admindash" method="post">
+    <h1>Welcome, Admin!</h1><span th:text="${adminName}"></span>
     <p>This is the admin panel. Add options as needed:</p>
 
-    <ul>
-        <li><a href="/user">Manage Users</a></li>
-        <li><a href="/course">Manage Courses</a></li>
-        <li><a href="/logout">Logout</a></li>
-    </ul>
+    <div class="dashboard">
+        <div class="card">
+            <h2>Manage Teachers</h2>
+            <a href="/admin/teachers">View</a>
+        </div>
+        <div class="card">
+            <h2>Manage Students</h2>
+            <a href="/admin/students">View</a>
+        </div>
+        <div class="card">
+            <h2>Curriculum</h2>
+            <a href="/admin/curriculum">Edit</a>
+        </div>
+        <div class="card">
+            <h2>Reports</h2>
+            <a href="/admin/reports">View</a>
+        </div>
+        <div class="card">
+            <h2>Settings</h2>
+            <a href="/admin/settings">Go</a>
+        </div>
+    </div>
     </form>
     </body>
 </html>

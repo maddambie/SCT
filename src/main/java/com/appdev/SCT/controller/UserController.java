@@ -71,6 +71,12 @@ public class UserController {
 				}
 		}
 		    
+		    @GetMapping("/admin/dash")
+		    public String adminDashboard(Model model) {
+		        model.addAttribute("adminName", "Admin"); // Later replace with session data
+		        return "admin";
+		    }
+		    
 			
 			@GetMapping("/courses")
 			public String courses(HttpSession session, Model model) {
