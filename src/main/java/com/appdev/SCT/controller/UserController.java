@@ -16,11 +16,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.appdev.SCT.model.Teacher;
 import com.appdev.SCT.service.TeacherService;
 import com.appdev.SCT.model.Course;
+import com.appdev.SCT.model.Subject;
 import com.appdev.SCT.model.User;
 import com.appdev.SCT.repository.CourseRepository;
 import com.appdev.SCT.repository.TeacherRepository;
 import com.appdev.SCT.repository.UserRepository;
 import com.appdev.SCT.service.CourseService;
+import com.appdev.SCT.service.SubjectService;
 import com.appdev.SCT.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -38,6 +40,10 @@ public class UserController {
 		    private UserService userService;
 			@Autowired
 		    private CourseService CourseService;
+			
+		    private SubjectService subjectService;
+			@Autowired
+		    private SubjectService SubjectService;
 			
 			
 			@GetMapping("/")
@@ -288,7 +294,11 @@ public class UserController {
 		    @PostMapping("/api/courses")
 		    public String getCourses(@RequestParam int id, Model model ) {
 		    	Course course = CourseService.findById(id);
+		    	String courseid = course.getProgram();
+		    	
+		    	Subject subject = SubjectService.findByCourseid(courseid);
 		        model.addAttribute("course", course);
+		        model.addAttribute("subject", subject);
 				return "/loadDesc";
 		    	
 		    }
