@@ -1,10 +1,14 @@
  <div>
- 	    <button>Description</button>
-	    <button>Subject List</button>
- 	<div th:text="${course.description}"></div> 
+ 	    <button value="description" onclick="myFunction(this.value)">Description</button>
+	    <button value="subject" onclick="myFunction(this.value)">Subject List</button>
+	    <br><br>
+ 	<div th:text="${course.description}" class="description" id="description"></div> 
  	
- 	<div th:text="${subject.subject}"></div> 
+ 	<div th:text="${subject.subject}" class="subject" id="subject" style="display:none"></div> 
  </div>
+ 
+ 
+ 
 
  
  

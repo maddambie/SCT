@@ -143,13 +143,16 @@ tr:hover {
     /* Modal Content */
 .modal-content {
 	background-color: #fff;
-	margin: 15% auto;
+	margin: 10% auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 7
-	0%;
+	width: 50%;
 	border-radius: 8px;
-   }
+
+	/* New properties */
+	height: 300px;        /* or use fixed height like height: 400px; */
+	overflow-y: auto;
+}	
 
     /* Close Button */
     .close {
