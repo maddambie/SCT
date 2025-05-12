@@ -369,7 +369,7 @@ public class UserController {
 			    	List<Course> course = CourseService.findCoursesByProgramAndYearLevel(program, yearLevel);
 			    	//String courseid = course.getProgram();
 			    	
-			    	List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel);
+			    	List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel, studentId);
 
 			        model.addAttribute("course", course);
 			        model.addAttribute("subject", subject);

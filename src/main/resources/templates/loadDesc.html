@@ -44,18 +44,18 @@
 		    	<option value="4">Fourth Year</option>
 	    	</select>
 	    	
-	    	<input type="Submit" value="Enroll">
+	    	<button type="Submit">Enroll </button>
 		</form>
 
 		 <table id="1">
  		 	<thead><th class="td_subj">Subject</th><th class="td_units">Units</th></thead>
  		 	<tbody><tr><td colspan="2"><center><b>First Semester</b></center></td></tr>
- 			<tr th:each="subject : ${subject}" th:if="${subject.year_level == 2 and subject.semester == 'First'}">
+ 			<tr th:each="subject : ${subject}" th:if="${subject.year_level == 1 and subject.semester == 'First'}">
             <td th:text="${subject.subject}"></td>
             <td th:text="${subject.unit}"></td>
         	</tr>
         	<tr><td colspan="2"><center><b>Second Semester</b></center></td></tr>
-        	 <tr th:each="subject : ${subject}" th:if="${subject.year_level == 2 and subject.semester == 'Second'}">
+        	 <tr th:each="subject : ${subject}" th:if="${subject.year_level == 1 and subject.semester == 'Second'}">
             <td  th:text="${subject.subject}"></td>
             <td  th:text="${subject.unit}"></td>
         	</tr></tbody>

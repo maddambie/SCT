@@ -24,8 +24,8 @@ public class SubjectService {
     }
     
     
-    public List<Subject> findSubjectByCourseidAndYearLevel(String courseid ,int yearLevel) {
+    public List<Subject> findSubjectByCourseidAndYearLevel(String courseid ,int yearLevel, String studentid) {
 
-		return subjectRepository.findSubjectByCourseidAndYearLevel(courseid, yearLevel);
+		return subjectRepository.findSubjectByCourseidAndYearLevel(courseid, yearLevel, studentid);
     }
 }
