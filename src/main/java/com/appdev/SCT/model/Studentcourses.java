@@ -21,7 +21,7 @@ public class Studentcourses {
 	    private String courseid;
 
 	    @Column(nullable = false, unique = false)
-	    private String year_level;
+	    private int year_level;
 
 	    @Column(nullable = false, unique = false)
 	    private String status;
@@ -30,7 +30,7 @@ public class Studentcourses {
 	    public Studentcourses() {}
 
 	    // ✅ Parameterized constructor
-	    public Studentcourses(String studentid, String courseid, String year_level, String status) {
+	    public Studentcourses(String studentid, String courseid, int year_level, String status) {
 	        this.studentid = studentid;
 	        this.courseid = courseid;
 	        this.year_level = year_level;
@@ -50,7 +50,7 @@ public class Studentcourses {
 	        return courseid;
 	    }
 
-	    public String getYear_level() {
+	    public int getYear_level() {
 	        return year_level;
 	    }
 	    

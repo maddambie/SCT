@@ -108,7 +108,7 @@ public class UserController {
 		    }
 		    
 			
-			@GetMapping("/courses")
+			@GetMapping("/curriculum")
 			public String courses(HttpSession session, Model model) {
 				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
 				if (studentId != null) {
@@ -331,7 +331,7 @@ public class UserController {
 		    
 		    
 		    @PostMapping("/enroll")
-		    public String enrollForm(@RequestParam String studentid, @RequestParam String courseid,@RequestParam String year_level, String status, Model model) {
+		    public String enrollForm(@RequestParam String studentid, @RequestParam String courseid,@RequestParam int year_level, String status, Model model) {
 		    	{
 		    		model.addAttribute("message", "Success");
 		    	}	
@@ -354,33 +354,34 @@ public class UserController {
 		        
 		    }
 		    
-		    @GetMapping("/curriculum")
+		    @GetMapping("/progress")
 			public String curriculum(HttpSession session, Model model) {
 				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
 				if (studentId != null) {
 				    User user = userService.findBystudentid(studentId); // Fetch user from database
 				    
 				    
-				    List<Studentcourses> studentcourses =  StudentcoursesService.findByStudentid(studentId);
+				    Studentcourses studentcourses = StudentcoursesService.findBystudentid(studentId);
 				    
-				    model.addAttribute("user", user);
+				    String program = studentcourses.getCourseid();
+				    int yearLevel = studentcourses.getYear_level();
 				    
-			    	//Course course = CourseService.findById(id);
+			    	List<Course> course = CourseService.findCoursesByProgramAndYearLevel(program, yearLevel);
 			    	//String courseid = course.getProgram();
 			    	
-			    	//List<Subject> subject = SubjectService.findByCourseid(courseid);
-			    	//List<Program> program = ProgramService.findByCourseid(courseid);
-			        //model.addAttribute("course", course);
-			        //model.addAttribute("subject", subject);
-			        //model.addAttribute("program", program);
-				    
+			    	List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel);
+
+			        model.addAttribute("course", course);
+			        model.addAttribute("subject", subject);
+
+				    model.addAttribute("user", user);
 				    model.addAttribute("studentcourses", studentcourses);
 				    
 				    
 				    
 				    
 				    
-				    return "curriculum";
+				    return "progress";
 				} else {
 				    return "redirect:/login";
 				}

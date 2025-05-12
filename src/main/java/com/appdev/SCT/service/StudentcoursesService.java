@@ -19,12 +19,12 @@ public class StudentcoursesService {
 		StudentcoursesRepository.findAll();
     }
 		
-    public List<Studentcourses> findByCourseid(String courseid) {
-        return StudentcoursesRepository.findByCourseid(courseid);
+    public Studentcourses findBystudentid(String courseid) {
+        return StudentcoursesRepository.findBystudentid(courseid);
     }
     
-    public List<Studentcourses> findByStudentid(String studentid) {
-        return StudentcoursesRepository.findByStudentid(studentid);
+    public void Studentcourses (String studentid) {
+        StudentcoursesRepository.findByStudentid(studentid);
     }
 }
 
