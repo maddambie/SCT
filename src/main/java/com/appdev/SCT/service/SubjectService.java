@@ -1,5 +1,7 @@
 package com.appdev.SCT.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ public class SubjectService {
         subjectRepository.findAll();
     }
 
-    public Subject findByCourseid(String courseid) {
+    public List<Subject> findByCourseid(String courseid) {
         return subjectRepository.findByCourseid(courseid);
     }
 }

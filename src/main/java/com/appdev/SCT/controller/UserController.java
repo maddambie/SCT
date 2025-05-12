@@ -16,14 +16,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.appdev.SCT.model.Teacher;
 import com.appdev.SCT.service.TeacherService;
 import com.appdev.SCT.model.Course;
+import com.appdev.SCT.model.Program;
+import com.appdev.SCT.model.Studentcourses;
 import com.appdev.SCT.model.Subject;
 import com.appdev.SCT.model.User;
 import com.appdev.SCT.repository.CourseRepository;
 import com.appdev.SCT.repository.TeacherRepository;
 import com.appdev.SCT.repository.UserRepository;
+import com.appdev.SCT.repository.ProgramRepository;
 import com.appdev.SCT.service.CourseService;
+import com.appdev.SCT.service.ProgramService;
 import com.appdev.SCT.service.SubjectService;
 import com.appdev.SCT.service.UserService;
+
+import com.appdev.SCT.repository.StudentcoursesRepository;
+import com.appdev.SCT.service.StudentcoursesService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -37,13 +44,25 @@ public class UserController {
 			@Autowired
 			private TeacherRepository teacherRepository;
 			@Autowired
+			private ProgramRepository ProgramRepository;
+			
+			@Autowired
 		    private UserService userService;
 			@Autowired
 		    private CourseService CourseService;
 			
-		    private SubjectService subjectService;
+		    
 			@Autowired
 		    private SubjectService SubjectService;
+			
+			@Autowired
+		    private ProgramService ProgramService;
+			
+			
+			@Autowired
+			private StudentcoursesRepository StudentcoursesRepository;
+			@Autowired
+		    private StudentcoursesService StudentcoursesService;
 			
 			
 			@GetMapping("/")
@@ -296,12 +315,81 @@ public class UserController {
 		    	Course course = CourseService.findById(id);
 		    	String courseid = course.getProgram();
 		    	
-		    	Subject subject = SubjectService.findByCourseid(courseid);
+		    	List<Subject> subject = SubjectService.findByCourseid(courseid);
+		    	List<Program> program = ProgramService.findByCourseid(courseid);
 		        model.addAttribute("course", course);
 		        model.addAttribute("subject", subject);
+		        model.addAttribute("program", program);
+		        
+		        
+		        
+		        
 				return "/loadDesc";
 		    	
 		    }
+		    
+		    
+		    
+		    @PostMapping("/enroll")
+		    public String enrollForm(@RequestParam String studentid, @RequestParam String courseid,@RequestParam String year_level, String status, Model model) {
+		    	{
+		    		model.addAttribute("message", "Success");
+		    	}	
+		        model.addAttribute("studentid", studentid);
+		        model.addAttribute("courseid", courseid);
+		        model.addAttribute("year_level", year_level);
+		        status = "forApproval";
+
+		        try {
+		        	
+		        	Studentcourses Studentcourses = new Studentcourses(studentid, courseid, year_level, status);
+		        	StudentcoursesRepository.save(Studentcourses);
+			       
+		            return "success";
+		        } 	
+		        catch(Exception e) {
+		        	model.addAttribute("error", "Error: " + e.getMessage());
+		            return "/teacherReg";
+		        }
+		        
+		    }
+		    
+		    @GetMapping("/curriculum")
+			public String curriculum(HttpSession session, Model model) {
+				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
+				if (studentId != null) {
+				    User user = userService.findBystudentid(studentId); // Fetch user from database
+				    
+				    
+				    List<Studentcourses> studentcourses =  StudentcoursesService.findByStudentid(studentId);
+				    
+				    model.addAttribute("user", user);
+				    
+			    	//Course course = CourseService.findById(id);
+			    	//String courseid = course.getProgram();
+			    	
+			    	//List<Subject> subject = SubjectService.findByCourseid(courseid);
+			    	//List<Program> program = ProgramService.findByCourseid(courseid);
+			        //model.addAttribute("course", course);
+			        //model.addAttribute("subject", subject);
+			        //model.addAttribute("program", program);
+				    
+				    model.addAttribute("studentcourses", studentcourses);
+				    
+				    
+				    
+				    
+				    
+				    return "curriculum";
+				} else {
+				    return "redirect:/login";
+				}
+		}
+
+
+
+			
+		    
 		    
 	}
 

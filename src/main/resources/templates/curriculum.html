@@ -13,9 +13,9 @@
         <nav>
   
     <ul>
-        <li><a class="selected" style="color:black" href="#">Home</a></li>
+        <li><a href="welcome">Home</a></li>
         <li><a href="courses">Courses</a></li>
-        <li><a href="curriculum">Curriculum</a></li>
+        <li><a class="selected" style="color:black" href="#">Curriculum</a></li>
         <li><a href="#">Progress</a></li>
         <li><a href="account">Account</a></li>
         <li><a href="#">Logout</a></li>
@@ -29,20 +29,11 @@
     <main>
 
         <section id="courses">
-            <h2>Courses</h2>
-            <p>Track the courses you are enrolled in and monitor your progress.</p>
-            <ul id="course-list">
-            </ul>
-        </section>
+			<tr th:each="sc : ${studentcourses}">
+			    <td th:text="${sc.studentid}">Student ID</td>
 
-        <section id="progress">
-            <h2>Progress</h2>
-            <p>View your progress and marks in each course.</p>
-        </section>
-
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>For questions or support, please reach out to us.</p>
+		    <td th:text="${sc.status}">Status</td>
+</tr>
         </section>
     </main>
 

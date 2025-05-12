@@ -8,14 +8,19 @@
 	
 </head>
 <body>
+			    
+	    	<input type="hidden" id="hiddenValue" name="hiddenValue">
+
    <div class="form-container">
    		<form th:action="@{/login/{value}(value=${hiddenValue})}" method="POST">
+   		
    		<div id="msg"> 
            	<span th:text="${error}"></span>
            </div>
-        <h1>Login Form</h1>
+        <h1>User Authentication</h1>
+        	
         	<input type="hidden" name="hiddenValue" id="hiddenValue" th:value="${hiddenValue}">
-        	<input type="hidden" name="_csrf" value="${_csrf.token}" />
+        	
         
         
             <i class="fas fa-user"><span th:text="${hiddenValue}"> Id:</i></span>
@@ -27,6 +32,9 @@
          	<a href="/forgotP" style="float:right;">Forgot password?</a>
          	
             <button>Login</button>
+       		<button name="teacher" id="teacher" class="btn" value="Teacher" onclick="openLink(this.value)">Teacher</button>
+	    	<button name="student" id="student" class="btn" value="Student" onclick="openLink(this.value)">Student</button>
+	    	<button name="admin" id="Admin" class="btn" value="Admin"onclick="openLink(this.value)">Admin</button>
               
             <p>Don’t have an account? <a th:href="@{/register/{value}(value=${hiddenValue})}">Register</a></p>
             

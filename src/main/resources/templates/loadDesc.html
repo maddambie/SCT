@@ -1,11 +1,113 @@
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+ 
  <div>
  	    <button value="description" onclick="myFunction(this.value)">Description</button>
 	    <button value="subject" onclick="myFunction(this.value)">Subject List</button>
+
+
+
+
 	    <br><br>
- 	<div th:text="${course.description}" class="description" id="description"></div> 
+ 	<div class="description" id="description">
+ 		<h3>Description</h3>
+ 		<div th:text="${course.description}">
+ 		
+ 		</div>
+		<div class="info-section">
+			<h3>Program Objectives</h3>
+			<ul class="custom-list">
+				<li th:each="program : ${program}" th:if="${program.type == 'PO'}" th:text="${program.description}"></li>
+			</ul>
+			
+			<h3>Career Paths</h3>
+			<ul class="custom-list" th:each="program : ${program}">
+			    <li th:each="program : ${program}" th:if="${program.type == 'CP'}" class="program-item">
+			        <div class="program-details">
+			            <h3 class="program-name" th:text="${program.name}"></h3>
+			            <p class="program-description" th:text="${program.description}"></p>
+			        </div>
+			    </li>
+			</ul>
+		</div>
  	
- 	<div th:text="${subject.subject}" class="subject" id="subject" style="display:none"></div> 
+ 	</div>
+ 	
+ 	
+ 	<div class="subject" id="subject" style="display:none">
+		<form action="enroll" method="POST">
+			<input type="hidden" id="courseid" name="courseid" th:value="${course.program}" >
+			<input type="hidden" id="modal_studentid" name="studentid" >
+		 	<select id="year_level" name="year_level" onchange="handleYearLevelChange()">
+		    	<option value="1">First Year</option>
+		    	<option value="2">Second Year</option>
+		    	<option value="3">Third Year</option>
+		    	<option value="4">Fourth Year</option>
+	    	</select>
+	    	
+	    	<input type="Submit" value="Enroll">
+		</form>
+
+		 <table id="1">
+ 		 	<thead><th class="td_subj">Subject</th><th class="td_units">Units</th></thead>
+ 		 	<tbody><tr><td colspan="2"><center><b>First Semester</b></center></td></tr>
+ 			<tr th:each="subject : ${subject}" th:if="${subject.year_level == 2 and subject.semester == 'First'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.unit}"></td>
+        	</tr>
+        	<tr><td colspan="2"><center><b>Second Semester</b></center></td></tr>
+        	 <tr th:each="subject : ${subject}" th:if="${subject.year_level == 2 and subject.semester == 'Second'}">
+            <td  th:text="${subject.subject}"></td>
+            <td  th:text="${subject.unit}"></td>
+        	</tr></tbody>
+ 		</table>
+ 	
+		 <table id="2" style="visibility:hidden">
+ 		 	<thead><th class="td_subj">Subject</th><th class="td_units">Units</th></thead>
+ 		 	<tbody><tr><td colspan="2"><center><b>First Semester</b></center></td></tr>
+ 			<tr th:each="subject : ${subject}" th:if="${subject.year_level == 2 and subject.semester == 'First'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.unit}"></td>
+        	</tr>
+        	<tr><td colspan="2"><center><b>Second Semester</b></center></td></tr>
+        	<tr th:each="subject : ${subject}" th:if="${subject.year_level == 2 and subject.semester == 'Second'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.unit}"></td>
+        	</tr></tbody>
+ 		</table>
+ 		
+ 		 <table id="3" style="visibility:hidden">
+
+ 		 	<thead><th class="td_subj">Subject</th><th class="td_units">Units</th></thead>
+ 		 	<tbody><tr><td colspan="2"><center><b>First Semester</b></center></td></tr>
+ 			<tr th:each="subject : ${subject}" th:if="${subject.year_level == 3 and subject.semester == 'First'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.unit}"></td>
+        	</tr>
+        	<tr><td colspan="2"><center><b>Second Semester</b></center></td></tr>
+        	<tr th:each="subject : ${subject}" th:if="${subject.year_level == 3 and subject.semester == 'Second'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.unit}"></td>
+        	</tr></tbody>
+ 		</table>
+ 	
+		 <table id="4" style="visibility:hidden">
+ 		 	<thead><th class="td_subj">Subject</th><th class="td_units">Units</th></thead>
+ 		 	<tbody><tr><td colspan="2"><center><b>First Semester</b></center></td></tr>
+ 			<tr th:each="subject : ${subject}" th:if="${subject.year_level == 4 and subject.semester == 'First'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.semester}"></td>
+        	</tr>
+        	<tr><td colspan="2"><center><b>Second Semester</b></center></td></tr>
+        	<tr th:each="subject : ${subject}" th:if="${subject.year_level == 4 and subject.semester == 'Second'}">
+            <td th:text="${subject.subject}"></td>
+            <td th:text="${subject.semester}"></td>
+        	</tr></tbody>
+ 		</table>
+ 		
+ 	 </div>
  </div>
+ 
+
  
  
  
