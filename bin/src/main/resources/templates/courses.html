@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Curriculum</title>
+    <link rel="stylesheet" href="/welcome.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="myModal" class="modal">
+
+
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+	    
+	    <div id="MoreDesc"></div>
+
+	  </div>
+	
+	</div>
+
+    <header>
+        <h2>Welcome <span th:text="${user.fullname}"></span></h2>
+        <input id="hidden_studentid" type="hidden" th:value="${user.studentid}">
+        <nav class="navbar">
+    <div class="nav-menu">
+        <nav>
+  
+    <ul>
+        <li><a href="welcome">Home</a></li>
+        <li><a class="selected" style="color:black" href="#">Curriculum</a></li>
+        <li><a href="progress">Progress</a></li>
+        <li><a href="account">Account</a></li>
+        <li><a href="#">Logout</a></li>
+    </ul>
+</nav>
+    </div>
+</nav>
+
+    </header>
+	<div class="main">
+	    <main>
+			<h2>Available Courses</h2>
+			<center><table border="1">
+			    <thead>
+			        <tr>
+			            <!--<th>Course ID</th>
+			            <th>Course Name</th>
+			            <th>Description</th>-->
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr th:each="course : ${courses}">
+			           
+					<td th:text="|${course.degree}'s Degree - ${course.course}, ${course.department}, ${course.program}|"></td>
+				    <td><button th:value="${course.id}" onclick="loadDesc(this.value)">More</button></td>
+			        </tr>
+			    </tbody>
+			</table></center>
+	    </main>
+	</div>
+    <footer>
+        <p>&copy; 2025 Student Curriculum Tracker. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+<script>
+
+const modal = document.getElementById("myModal");
+const span = document.getElementsByClassName("close")[0];
+let moreDesc = document.getElementById("MoreDesc");
+
+
+	
+	function handleYearLevelChange() {
+		var selectedYearLevel = document.getElementById('year_level').value;
+		var modalTable = document.querySelector('.modal table');
+	    for (let i = 1; i <= 4; i++) {
+			var table = document.getElementById(i);
+	        if (selectedYearLevel == i) {
+				table.style.visibility = "visible"; 
+				table.style.position = "";
+				table.style.height = "";
+				table.style.overflow = "";
+
+	        } else {
+				table.style.visibility = "hidden";
+				table.style.position = "absolute";
+				table.style.height = "0";
+				table.style.overflow = "hidden";
+	            
+	
+	        }
+	    }
+	}
+
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+span.onclick = function() {
+    modal.style.display = "none";
+  }
+ 
+ 
+
+
+function myFunction(value){
+	let subject = document.getElementById("subject");
+	let description = document.getElementById("description");
+	let hidden_studentid= document.getElementById("hidden_studentid");
+	let modal_studentid= document.getElementById("modal_studentid");
+	if(value == "description"){
+		subject.style.display = "none";
+		description.style.display = "block";
+	}
+	else{
+		subject.style.display = "block";
+		description.style.display = "none";
+		modal_studentid.value = hidden_studentid.value;
+
+	}
+}
+ 
+ 
+  function loadDesc(id) {
+	  
+	  $.ajax({
+	      url: `/api/courses`,
+	      type: 'POST',
+	      data: { id: id },
+	      success: function(data) {
+	        moreDesc.innerHTML = data;
+	       
+	      }
+	    });
+	  modal.style.display = "block";
+  }
+</script>

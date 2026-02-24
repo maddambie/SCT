@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="/register.css">
+    	
+</head>
+<body>
+    <div class="form-container">
+    	<input type="hidden" name="_csrf" value="${_csrf.token}" />
+        <h1>Registration Form</h1>
+        <p>Already a user? <a href="/login">Login!</a></p>
+        <div id="msg"> 
+           	<p id="validate"></p>
+           	<span th:text="${studentid}">
+           	
+           </div>
+        <form action="/user/save" method="post">
+            <label for="name">Student Id:</label>
+            <input type="text" id="studentid" name="studentid" maxlength="15"required />
+            
+            <label for="name">Student Name:</label>
+            <input type="text" id="studentName" name="studentName" required />
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+
+		
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+            
+            <label for="confirmpassword">Confirm Password:</label>
+            <input type="password" id="ConfirmPassword" name="ConfirmPassword" required />
+            
+            <input type="hidden" id="program" value="" name="program" />
+            <input type="hidden" id="yearlevel" value="" name="yearlevel" />
+			<input type="hidden" id="department" value="" name="department" />
+			
+			
+            <button id="submit" type="submit">Register</button>
+            
+           
+        </form>
+    </div>
+</body>
+</html>
+
+	
+<script>
+$(document).ready(function(){
+	let p1 = document.getElementById("password");
+	let p2 = document.getElementById("ConfirmPassword");
+	$("#ConfirmPassword").keyup(function(){
+		if(p1.value != p2.value){
+			document.getElementById("validate").innerHTML = "Password not matched";
+			$("#submit").attr("type", "button");
+		}
+		else{
+			document.getElementById("validate").innerHTML = "";
+			$("#submit").attr("type", "submit");
+		}
+	});
+});
+</script>

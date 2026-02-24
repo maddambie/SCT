@@ -211,7 +211,7 @@ tr:hover {
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 70%;
     border-radius: 8px;
     height: 600px; /* Or use fixed height like height: 400px; */
     overflow-y: auto;

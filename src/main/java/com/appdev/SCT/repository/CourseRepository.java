@@ -20,10 +20,11 @@ public interface CourseRepository  extends JpaRepository<Course, Long> {
 	    SELECT a.* 
 	    FROM course_list a 
 	    JOIN studentcourses b ON a.program = b.courseid 
-	    WHERE a.program = :program AND b.year_level = :yearLevel
+	    WHERE a.program = :program AND b.year_level = :yearLevel AND b.status = :status
 	    LIMIT 1
 	""", nativeQuery = true)
 	List<Course> findCoursesByProgramAndYearLevel(@Param("program") String program,
-	                                              @Param("yearLevel") int yearLevel);
+	                                              @Param("yearLevel") int yearLevel,
+	                                              @Param("status") String status);
 
 }

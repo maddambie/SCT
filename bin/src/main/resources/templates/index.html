@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<title>Index</title>
+</head>
+<body>
+	<div class="button-container">
+	
+	    <button name="teacher" id="teacher" class="btn" value="Teacher" onclick="openLink(this.value)">Teacher</button>
+	    <button name="student" id="student" class="btn" value="Student" onclick="openLink(this.value)">Student</button>
+	    <button name="admin" id="Admin" class="btn" value="Admin"onclick="openLink(this.value)">Admin</button>
+	    <form id="myForm" method="POST" action="/login">
+	    	<input type="hidden" id="hiddenValue" name="hiddenValue">
+	    </form>
+	    
+	</div>
+</body>
+</html>
+
+
+<script>
+	function openLink(a){
+		hiddenvalue = document.getElementById("hiddenValue").value = a;
+		document.getElementById("myForm").submit();
+	}
+//	
+</script>
+
+
+
+
+

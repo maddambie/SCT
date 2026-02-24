@@ -117,7 +117,7 @@ public class UserController {
 				    model.addAttribute("courses", courses);
 				    
 				    model.addAttribute("user", user);
-				    return "courses";
+				    return "curriculum";
 				} else {
 				    return "redirect:/login";
 				}
@@ -359,29 +359,17 @@ public class UserController {
 				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
 				if (studentId != null) {
 				    User user = userService.findBystudentid(studentId); // Fetch user from database
-				    
-				    
 				    Studentcourses studentcourses = StudentcoursesService.findBystudentid(studentId);
-				    
 				    String program = studentcourses.getCourseid();
 				    int yearLevel = studentcourses.getYear_level();
-				    
-			    	List<Course> course = CourseService.findCoursesByProgramAndYearLevel(program, yearLevel);
+			    	List<Course> course = CourseService.findCoursesByProgramAndYearLevel(program, yearLevel,"ACTIVE");
 			    	//String courseid = course.getProgram();
-			    	
 			    	List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel, studentId);
-
+			    	model.addAttribute("user", user);
 			        model.addAttribute("course", course);
 			        model.addAttribute("subject", subject);
-
-				    model.addAttribute("user", user);
 				    model.addAttribute("studentcourses", studentcourses);
-				    
-				    
-				    
-				    
-				    
-				    return "progress";
+				    return "progress";	    
 				} else {
 				    return "redirect:/login";
 				}

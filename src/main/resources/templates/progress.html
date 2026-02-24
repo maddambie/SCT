@@ -25,33 +25,69 @@
 
     </header>
 
-    <main>
-	
-		<div th:each="course : ${course}" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+   <main>
 
-		    <p><strong></bold><span th:text="${course.degree}"> </span>'s Degree in <span th:text="${course.course}"></span></bold></p>
-
+    <!-- COURSE SECTION -->
+		<div th:if="${course != null and !#lists.isEmpty(course)}">
+		    <div th:each="course : ${course}" 
+		         style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+		         
+		        <p>
+		            <strong>
+		                <span th:text="${course.degree}"></span>'s Degree in 
+		                <span th:text="${course.course}"></span>
+		            </strong>
+		        </p>
+		    </div>
 		</div>
-
-    
-			<div>
-			<table id="1">
-	 		 	<thead><th>Code</th><th class="td_subj">Subject</th><th class="td_units">Units</th></thead>
-	 		 	<tbody><tr><td colspan="3"><center><b>First Semester</b></center></td></tr>
-	 			<tr th:each="subject : ${subject}" th:if="${subject.semester == 'First'}">
-		 			<td th:text="${subject.subject_code}"></td>
-		            <td th:text="${subject.subject}"></td>
-		            <td th:text="${subject.unit}"></td>
-	        	</tr>
-	        	<tr><td colspan="3"><center><b>Second Semester</b></center></td></tr>
-	        	<tr th:each="subject : ${subject}" th:if="${subject.semester == 'Second'}">
-		        	<td th:text="${subject.subject_code}"></td>
-		            <td  th:text="${subject.subject}"></td>
-		            <td  th:text="${subject.unit}"></td>
-	        	</tr></tbody>
-	 		</table>
+		
+		<div th:if="${#lists.isEmpty(course)}">
+		    <p>No course available.</p>
 		</div>
-	</main>
+		
+		
+		<!-- SUBJECT TABLE -->
+		    <div th:if="${subject != null and !#lists.isEmpty(subject)}">
+		        <table id="1">
+		            <thead>
+		                <th>Code</th>
+		                <th class="td_subj">Subject</th>
+		                <th class="td_units">Units</th>
+		            </thead>
+		
+		            <tbody>
+		                <tr>
+		                    <td colspan="3"><center><b>First Semester</b></center></td>
+		                </tr>
+		
+		                <tr th:each="subject : ${subject}" 
+		                    th:if="${subject.semester == 'First'}">
+		
+		                    <td th:text="${subject.subject_code}"></td>
+		                    <td th:text="${subject.subject}"></td>
+		                    <td th:text="${subject.unit}"></td>
+		                </tr>
+		
+		                <tr>
+		                    <td colspan="3"><center><b>Second Semester</b></center></td>
+		                </tr>
+		
+		                <tr th:each="subject : ${subject}" 
+		                    th:if="${subject.semester == 'Second'}">
+		
+		                    <td th:text="${subject.subject_code}"></td>
+		                    <td th:text="${subject.subject}"></td>
+		                    <td th:text="${subject.unit}"></td>
+		                </tr>
+		            </tbody>
+		        </table>
+		    </div>
+		
+		    <div th:if="${#lists.isEmpty(subject)}">
+		        <p>No subjects available.</p>
+		    </div>
+		
+		</main>
     <footer>
         <p>&copy; 2025 Student Curriculum Tracker. All rights reserved.</p>
     </footer>
