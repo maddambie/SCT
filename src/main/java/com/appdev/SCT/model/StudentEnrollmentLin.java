@@ -7,16 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "student_subject_list")
-public class StudentSubjectList {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false, unique = true)
+@Table(name = "student_enrollment_lin")
+public class StudentEnrollmentLin {
+	
+	@Column
+    private int id;
+    @Column(nullable = false, unique = false)
     private String studentid;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = false)
     private String subject_code;
     
     @Column(nullable = false, unique = false)
@@ -35,5 +34,5 @@ public class StudentSubjectList {
     private Float finalGrade;
     
     @Column(nullable = true, unique = false)
-    private String remakrs;
+    private String remarks;
 }

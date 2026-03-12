@@ -1,6 +1,7 @@
 package com.appdev.SCT.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,7 @@ import com.appdev.SCT.model.Teacher;
 import com.appdev.SCT.service.TeacherService;
 import com.appdev.SCT.model.Course;
 import com.appdev.SCT.model.Program;
-import com.appdev.SCT.model.Studentcourses;
+import com.appdev.SCT.model.StudentEnrollmentHdr;
 import com.appdev.SCT.model.Subject;
 import com.appdev.SCT.model.User;
 import com.appdev.SCT.repository.CourseRepository;
@@ -28,8 +29,8 @@ import com.appdev.SCT.service.CourseService;
 import com.appdev.SCT.service.ProgramService;
 import com.appdev.SCT.service.SubjectService;
 import com.appdev.SCT.service.UserService;
-
-import com.appdev.SCT.repository.StudentcoursesRepository;
+import com.appdev.SCT.service.SpProgressService;
+import com.appdev.SCT.repository.StudentEnrollmentHdrRepository;
 import com.appdev.SCT.service.StudentcoursesService;
 
 import jakarta.servlet.http.HttpSession;
@@ -51,6 +52,10 @@ public class UserController {
 			@Autowired
 		    private CourseService CourseService;
 			
+			@Autowired
+		    private SpProgressService SpProgressService;
+			
+
 		    
 			@Autowired
 		    private SubjectService SubjectService;
@@ -60,7 +65,7 @@ public class UserController {
 			
 			
 			@Autowired
-			private StudentcoursesRepository StudentcoursesRepository;
+			private StudentEnrollmentHdrRepository StudentcoursesRepository;
 			@Autowired
 		    private StudentcoursesService StudentcoursesService;
 			
@@ -331,18 +336,18 @@ public class UserController {
 		    
 		    
 		    @PostMapping("/enroll")
-		    public String enrollForm(@RequestParam String studentid, @RequestParam String courseid,@RequestParam int year_level, String status, Model model) {
+		    public String enrollForm(@RequestParam String studentid, @RequestParam String courseid,@RequestParam int year_level,Model model) {
 		    	{
 		    		model.addAttribute("message", "Success");
 		    	}	
 		        model.addAttribute("studentid", studentid);
 		        model.addAttribute("courseid", courseid);
 		        model.addAttribute("year_level", year_level);
-		        status = "forApproval";
+		       
 
 		        try {
 		        	
-		        	Studentcourses Studentcourses = new Studentcourses(studentid, courseid, year_level, status);
+		        	StudentEnrollmentHdr Studentcourses = new StudentEnrollmentHdr(studentid, courseid, year_level, 2); //2 is approval check `status` table on Database
 		        	StudentcoursesRepository.save(Studentcourses);
 			       
 		            return "success";
@@ -359,16 +364,26 @@ public class UserController {
 				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
 				if (studentId != null) {
 				    User user = userService.findBystudentid(studentId); // Fetch user from database
-				    Studentcourses studentcourses = StudentcoursesService.findBystudentid(studentId);
-				    String program = studentcourses.getCourseid();
-				    int yearLevel = studentcourses.getYear_level();
-			    	List<Course> course = CourseService.findCoursesByProgramAndYearLevel(program, yearLevel,"ACTIVE");
+				    model.addAttribute("user", user);
+				    List<Map<String, Object>> studentcourses = SpProgressService.runSPProgress("", 1,studentId,1, 3);
+				    Map<String, Object> row = studentcourses.get(0);
+				    String program = (String) row.get("courseid");
+				    int yearLevel = ((Number) row.get("year_level")).intValue();
+				    int status = ((Number) row.get("status")).intValue();
+				    int id = ((Number) row.get("id")).intValue();
+			    	if (status == 3) {
 			    	//String courseid = course.getProgram();
-			    	List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel, studentId);
-			    	model.addAttribute("user", user);
-			        model.addAttribute("course", course);
+			    	//List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel, studentId,status);
+			    	List<Map<String, Object>> subject = SpProgressService.runSPProgress(program, yearLevel,studentId,id, 2);
+			        
+			    	
+			    	
 			        model.addAttribute("subject", subject);
 				    model.addAttribute("studentcourses", studentcourses);
+			    	}
+			    	
+			    	List<Map<String, Object>> course = SpProgressService.runSPProgress(program, yearLevel,studentId,id, 1);
+			    	model.addAttribute("course", course);
 				    return "progress";	    
 				} else {
 				    return "redirect:/login";

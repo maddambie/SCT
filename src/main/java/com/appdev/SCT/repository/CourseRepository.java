@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.appdev.SCT.model.Course;
-import com.appdev.SCT.model.Studentcourses;
+import com.appdev.SCT.model.StudentEnrollmentHdr;
 
 
 @Repository
@@ -17,14 +17,15 @@ public interface CourseRepository  extends JpaRepository<Course, Long> {
 	 
 	 
 	 @Query(value = """
-	    SELECT a.* 
+	    SELECT a.*,c.status_name,b.status as status_id
 	    FROM course_list a 
 	    JOIN studentcourses b ON a.program = b.courseid 
-	    WHERE a.program = :program AND b.year_level = :yearLevel AND b.status = :status
+	    JOIN status c ON c.id = b.status
+	    WHERE a.program = :program AND b.year_level = :yearLevel AND  b.status IN( 2,3 )
 	    LIMIT 1
 	""", nativeQuery = true)
 	List<Course> findCoursesByProgramAndYearLevel(@Param("program") String program,
-	                                              @Param("yearLevel") int yearLevel,
-	                                              @Param("status") String status);
+	                                              @Param("yearLevel") int yearLevel
+	                                             );
 
 }

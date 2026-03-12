@@ -11,7 +11,7 @@ import com.appdev.SCT.model.Course;
 import com.appdev.SCT.model.Subject;
 
 @Repository
-public interface SubjectRepository  extends JpaRepository<Subject, Long> {
+public interface StudentEnrollmentLinRepository  extends JpaRepository<Subject, Long> {
 	 Subject findById(int id);
 
 	 List<Subject> findByCourseid(String courseid);
@@ -20,9 +20,10 @@ public interface SubjectRepository  extends JpaRepository<Subject, Long> {
 					    SELECT a.* 
 			    FROM subject a 
 			    JOIN studentcourses b ON a.courseid = b.courseid and b.year_level = a.year_level
-			    WHERE a.courseid = :courseid AND b.year_level = :yearLevel AND studentid = :studentid
+			    WHERE a.courseid = :courseid AND b.year_level = :yearLevel AND studentid = :studentid AND :status = 3
 			""", nativeQuery = true)
 			List<Subject> findSubjectByCourseidAndYearLevel(@Param("courseid") String program,
 			                                              @Param("yearLevel") int yearLevel,
-															@Param("studentid") String studentid);
+															@Param("studentid") String studentid,
+															@Param("status") int status);
 }

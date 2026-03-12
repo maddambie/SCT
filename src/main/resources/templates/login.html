@@ -9,10 +9,10 @@
 </head>
 <body>
 			    
-	    	<input type="hidden" id="hiddenValue" name="hiddenValue">
+	    	
 
    <div class="form-container">
-   		<form th:action="@{/login/{value}(value=${hiddenValue})}" method="POST">
+   		<form id="logForm" th:action="@{/login/Student}" method="POST">
    		
    		<div id="msg"> 
            	<span th:text="${error}"></span>
@@ -20,10 +20,14 @@
         <h1>User Authentication</h1>
         	
         	<input type="hidden" name="hiddenValue" id="hiddenValue" th:value="${hiddenValue}">
-        	
+        	<select onchange="changeAction(this)" id="USERtype" name="USERtype">
+        		<option value="Student">STUDENT</option>
+        		<option value="Teacher">TEACHER</option>
+        		<option value="Admin">ADMIN</option>
+        	</select>
         
         
-            <i class="fas fa-user"><span th:text="${hiddenValue}"> Id:</i></span>
+            <i class="fas fa-user"><span id="userId" th:text="${hiddenValue}"> Id:</i></span>
             <input type="text" id="studentid" name="studentid" required />
             
             <i class="fas fa-lock"> Password:</i>
@@ -32,11 +36,9 @@
          	<a href="/forgotP" style="float:right;">Forgot password?</a>
          	
             <button>Login</button>
-       		<button name="teacher" id="teacher" class="btn" value="Teacher" onclick="openLink(this.value)">Teacher</button>
-	    	<button name="student" id="student" class="btn" value="Student" onclick="openLink(this.value)">Student</button>
-	    	<button name="admin" id="Admin" class="btn" value="Admin"onclick="openLink(this.value)">Admin</button>
-              
-            <p>Don’t have an account? <a th:href="@{/register/{value}(value=${hiddenValue})}">Register</a></p>
+            </form>
+
+            <p>Don’t have an account? <a id="reg" th:href="@{/register/{value}(value=${hiddenValue})}">Register</a></p>
             
              <div class="separator"><span>-------------------------------------OR-------------------------------------</span></div>
         
@@ -45,7 +47,16 @@
             
             
         </div> -->
-  	</form>
+  	
   </div>
 </body>
 </html>
+<script>
+function changeAction(select){
+    const form = document.getElementById("logForm");
+    const reg = document.getElementById("reg");
+    const userId = document.getElementById("userId").innerHTML = select.value;
+    form.action = "/login/"+select.value;
+    reg.href = "/register/"+select.value;
+}
+</script>

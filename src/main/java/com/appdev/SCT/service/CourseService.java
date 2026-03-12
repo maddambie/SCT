@@ -22,9 +22,9 @@ public class CourseService {
         return CourseRepository.findById(id); // Fetch user from database
 	}
     
-    public List<Course> findCoursesByProgramAndYearLevel(String program ,int yearLevel,String status) {
+    public List<Course> findCoursesByProgramAndYearLevel(String program ,int yearLevel) {
 
-		return CourseRepository.findCoursesByProgramAndYearLevel(program, yearLevel,status);
+		return CourseRepository.findCoursesByProgramAndYearLevel(program, yearLevel);
     }
 }
 

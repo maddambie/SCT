@@ -33,10 +33,17 @@
 		         style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
 		         
 		        <p>
-		            <strong>
-		                <span th:text="${course.degree}"></span>'s Degree in 
-		                <span th:text="${course.course}"></span>
-		            </strong>
+					<strong>
+					    <!-- If status = 2 -->
+					    <span th:if="${course.status_id == 2}">
+					        You have <b>PENDING</b> Application for <span th:text="${course.degree}"></span>'s Degree in <span th:text="${course.course}"></span>
+					    </span>
+					
+					    <!-- If status != 2 -->
+					    <span if="${course.status_id == 3}">
+					        <span th:text="${course.degree}"></span>'s Degree in <span th:text="${course.course}"></span>
+					    </span>
+					</strong>
 		        </p>
 		    </div>
 		</div>

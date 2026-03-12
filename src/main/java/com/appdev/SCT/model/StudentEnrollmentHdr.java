@@ -1,6 +1,11 @@
 package com.appdev.SCT.model;
 
 import jakarta.persistence.Id;
+
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 //import jakarta.persistence.Lob;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,13 +13,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 @Entity
-@Table(name = "studentcourses")
-public class Studentcourses {
+@Table(name = "student_enrollment_hdr")
+public class StudentEnrollmentHdr {
 	 @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long id;
 
-	    @Column(nullable = false, unique = true)
+	    @Column(nullable = false, unique = false)
 	    private String studentid;
 	    
 	    @Column(nullable = false, unique = false)
@@ -24,13 +29,16 @@ public class Studentcourses {
 	    private int year_level;
 
 	    @Column(nullable = false, unique = false)
-	    private String status;
+	    private int status;
 	    
+	    @CreationTimestamp
+	    @Column(name = "created_date", updatable = false)
+	    private LocalDateTime created_date;
 	    
-	    public Studentcourses() {}
+	    public StudentEnrollmentHdr() {}
 
 	    // ✅ Parameterized constructor
-	    public Studentcourses(String studentid, String courseid, int year_level, String status) {
+	    public StudentEnrollmentHdr(String studentid, String courseid, int year_level, int status) {
 	        this.studentid = studentid;
 	        this.courseid = courseid;
 	        this.year_level = year_level;
@@ -54,7 +62,11 @@ public class Studentcourses {
 	        return year_level;
 	    }
 	    
-	    public String getStatus() {
+	    public int getStatus() {
 	        return status;
+	    }
+	    
+	    public LocalDateTime getCreated_date() {
+	        return created_date;
 	    }
 }

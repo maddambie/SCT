@@ -6,26 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import com.appdev.SCT.model.Studentcourses;
-import com.appdev.SCT.repository.StudentcoursesRepository;
+import com.appdev.SCT.model.StudentEnrollmentHdr;
+import com.appdev.SCT.repository.StudentEnrollmentHdrRepository;
 
 @Service
 public class StudentcoursesService {
 	
 	@Autowired
-    private StudentcoursesRepository StudentcoursesRepository;
+    private StudentEnrollmentHdrRepository StudentcoursesRepository;
 	
-	public void findAll(Studentcourses Studentcourses) {
+	public void findAll(StudentEnrollmentHdr Studentcourses) {
 		StudentcoursesRepository.findAll();
     }
 		
-    public Studentcourses findBystudentid(String courseid) {
+    public StudentEnrollmentHdr findBystudentid(String courseid) {
         return StudentcoursesRepository.findBystudentid(courseid);
     }
     
+
     public void Studentcourses (String studentid) {
         StudentcoursesRepository.findByStudentid(studentid);
     }
+    
+    
 }
 
 

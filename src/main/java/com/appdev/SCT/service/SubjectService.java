@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.appdev.SCT.model.Course;
 import com.appdev.SCT.model.Subject;
-import com.appdev.SCT.repository.SubjectRepository;
+import com.appdev.SCT.repository.StudentEnrollmentLinRepository;
 
 @Service  // <- ADD THIS
 public class SubjectService {
 
     @Autowired
-    private SubjectRepository subjectRepository;
+    private StudentEnrollmentLinRepository subjectRepository;
 
     public void findAll(Subject subject) {
         subjectRepository.findAll();
@@ -24,8 +24,8 @@ public class SubjectService {
     }
     
     
-    public List<Subject> findSubjectByCourseidAndYearLevel(String courseid ,int yearLevel, String studentid) {
+    public List<Subject> findSubjectByCourseidAndYearLevel(String courseid ,int yearLevel, String studentid,int status) {
 
-		return subjectRepository.findSubjectByCourseidAndYearLevel(courseid, yearLevel, studentid);
+		return subjectRepository.findSubjectByCourseidAndYearLevel(courseid, yearLevel, studentid,status);
     }
 }
