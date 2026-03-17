@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>ChangePassword</title>
-<link rel="stylesheet" href="/account.css">
+<link rel="stylesheet" href="/css/style_account.css">
+<link rel="stylesheet" href="/js/script_account.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
@@ -44,36 +45,3 @@
 </body>
 </html>
 
-
-
-<script>
-let hiddenPass = document.getElementById("hiddenpass");
-let currentPassword = document.getElementById("current-password");
-let newPassword = document.getElementById("new-password");
-let confirmPassword = document.getElementById("confirm-password");
-
-$(document).ready(function(){
-	$("#current-password").keyup(function(){
-		if(hiddenpass.value != currentPassword.value){
-		
-			$("#submit").attr("type", "button");
-		}
-		else{
-			$("#submit").attr("type", "submit");
-		}
-	});
-	
-	$("#submit").click(function(){
-		
-			if(newPassword.value == confirmPassword.value && hiddenpass.value == currentPassword.value){
-
-				$("#submit").attr("type", "submit");
-			}
-			else{
-
-				$("#submit").attr("type", "button");
-			}
-		
-	});
-});
-</script>
