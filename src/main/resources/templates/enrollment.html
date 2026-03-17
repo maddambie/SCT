@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Enrollment</title>
+    <link rel="stylesheet" href="welcome.css">
+    <link rel="stylesheet" href="enrollment.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+    <header>
+        <h2>Welcome <span th:text="${user.fullname}"></span></h2>
+    <nav class="navbar">
+	    <div class="nav-menu">
+	    <nav>
+		    <ul>
+		        <li><a href="welcome">Home</a></li>
+		        <li><a href="curriculum">Curriculum</a></li>
+		        <li><a class="selected" style="color:black" href="#">Progress</a></li>
+		        <li><a href="account">Account</a></li>
+		        <li><a href="#">Logout</a></li>
+		    </ul>
+		</nav>
+	    </div>
+	</nav>
+
+</header>
+<main>
+    <div class="filter-section">
+        <div class="filter-row">
+            <span class="filter-label">Search by Subject Code</span>
+            <input type="text" id="subjectCode" placeholder="e.g. CS101">
+        </div>
+
+        <div class="filter-row">
+            <span class="filter-label">Year and Course</span>
+            <select id="year_level">
+                <option value=""> - - - - - </option>
+                <option value="1">First Year</option>
+                <option value="2">Second Year</option>
+                <option value="3">Third Year</option>
+                <option value="4">Fourth Year</option>
+            </select>
+            
+            <select id="course">
+                <option value=""> - - - - - </option>
+                <option th:each="c : ${course}" th:value="${c.program}" th:text="${c.program}"></option>
+            </select>
+            <button id="load" onclick="Load()">Load</button>
+        </div>
+    </div>
+	<div class="main">
+	    <div id = "enrollmentTBL">
+	    </div>
+    </div>
+</main>
+</body>
+</html>
+<script>
+const enrollmentTBL = document.getElementById('enrollmentTBL');
+var id = 1;
+function Load(){
+	  $.ajax({
+	      url: `/api/enrollment`,
+	      type: 'POST',
+	      data: { id: id },
+	      success: function(data) {
+	    	  enrollmentTBL.innerHTML = data;
+	    	 console.log(data);
+	       
+	      }
+	    });
+	  //modal.style.display = "block";
+}
+</script>

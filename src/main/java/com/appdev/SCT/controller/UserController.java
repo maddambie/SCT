@@ -30,6 +30,7 @@ import com.appdev.SCT.service.ProgramService;
 import com.appdev.SCT.service.SubjectService;
 import com.appdev.SCT.service.UserService;
 import com.appdev.SCT.service.SpProgressService;
+import com.appdev.SCT.service.SpCurriculumService;
 import com.appdev.SCT.repository.StudentEnrollmentHdrRepository;
 import com.appdev.SCT.service.StudentcoursesService;
 
@@ -112,20 +113,33 @@ public class UserController {
 		        return "admin";
 		    }
 		    
-			
+
 			@GetMapping("/curriculum")
-			public String courses(HttpSession session, Model model) {
+			public String curriculum(HttpSession session, Model model) {
 				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
 				if (studentId != null) {
 				    User user = userService.findBystudentid(studentId); // Fetch user from database
-				    List<Course> courses = CourseRepository.findAll();
-				    model.addAttribute("courses", courses);
+				   
 				    
 				    model.addAttribute("user", user);
-				    return "curriculum";
+				    
+				    int userLogged = 1;
+					model.addAttribute("userLogged", userLogged);
+				    //return "curriculum";
 				} else {
-				    return "redirect:/login";
+					
+					
+				    
+					
+					int userLogged = 0;
+					
+					model.addAttribute("userLogged", userLogged);
+					 
+				    //return "redirect:/login";
 				}
+				List<Course> courses = CourseRepository.findAll();
+				model.addAttribute("courses", courses);
+				return "curriculum";
 		}
 			
 			
@@ -334,7 +348,8 @@ public class UserController {
 		    }
 		    
 		    
-		    
+		    @Autowired
+		    private SpCurriculumService SpCurriculumService;
 		    @PostMapping("/enroll")
 		    public String enrollForm(@RequestParam String studentid, @RequestParam String courseid,@RequestParam int year_level,Model model) {
 		    	{
@@ -344,51 +359,58 @@ public class UserController {
 		        model.addAttribute("courseid", courseid);
 		        model.addAttribute("year_level", year_level);
 		       
+	            SpCurriculumService.runSPCurriculum(studentid, courseid,year_level,0);
 
-		        try {
-		        	
-		        	StudentEnrollmentHdr Studentcourses = new StudentEnrollmentHdr(studentid, courseid, year_level, 2); //2 is approval check `status` table on Database
-		        	StudentcoursesRepository.save(Studentcourses);
-			       
-		            return "success";
-		        } 	
-		        catch(Exception e) {
-		        	model.addAttribute("error", "Error: " + e.getMessage());
-		            return "/teacherReg";
-		        }
+	            return "success";
+
 		        
 		    }
 		    
 		    @GetMapping("/progress")
-			public String curriculum(HttpSession session, Model model) {
-				String studentId = (String) session.getAttribute("studentid"); // Get user ID from session
-				if (studentId != null) {
-				    User user = userService.findBystudentid(studentId); // Fetch user from database
-				    model.addAttribute("user", user);
-				    List<Map<String, Object>> studentcourses = SpProgressService.runSPProgress("", 1,studentId,1, 3);
-				    Map<String, Object> row = studentcourses.get(0);
-				    String program = (String) row.get("courseid");
-				    int yearLevel = ((Number) row.get("year_level")).intValue();
-				    int status = ((Number) row.get("status")).intValue();
-				    int id = ((Number) row.get("id")).intValue();
-			    	if (status == 3) {
-			    	//String courseid = course.getProgram();
-			    	//List<Subject> subject = SubjectService.findSubjectByCourseidAndYearLevel(program, yearLevel, studentId,status);
-			    	List<Map<String, Object>> subject = SpProgressService.runSPProgress(program, yearLevel,studentId,id, 2);
-			        
-			    	
-			    	
-			        model.addAttribute("subject", subject);
-				    model.addAttribute("studentcourses", studentcourses);
-			    	}
-			    	
-			    	List<Map<String, Object>> course = SpProgressService.runSPProgress(program, yearLevel,studentId,id, 1);
-			    	model.addAttribute("course", course);
-				    return "progress";	    
-				} else {
-				    return "redirect:/login";
-				}
-		}
+		    public String progress(HttpSession session, Model model) {
+
+		        String studentId = (String) session.getAttribute("studentid");
+
+		        if (studentId != null) {
+
+		            User user = userService.findBystudentid(studentId);
+		            model.addAttribute("user", user);
+
+		            List<Map<String, Object>> studentcourses =
+		                    SpProgressService.runSPProgress("", 1, studentId, 1, 3);
+
+		            model.addAttribute("studentcourses", studentcourses);
+
+		            // ✅ Check if data exists first
+		            if (studentcourses != null && !studentcourses.isEmpty()) {
+
+		                Map<String, Object> row = studentcourses.get(0);
+
+		                String program = (String) row.get("courseid");
+		                int yearLevel = ((Number) row.get("year_level")).intValue();
+		                int status = ((Number) row.get("status")).intValue();
+		                int id = ((Number) row.get("id")).intValue();
+
+		                if (status == 3) {
+
+		                    List<Map<String, Object>> subject =
+		                            SpProgressService.runSPProgress(program, yearLevel, studentId, id, 2);
+
+		                    model.addAttribute("subject", subject);
+		                }
+
+		                List<Map<String, Object>> course =
+		                        SpProgressService.runSPProgress(program, yearLevel, studentId, id, 1);
+
+		                model.addAttribute("course", course);
+		            }
+
+		            return "progress";
+
+		        } else {
+		            return "redirect:/login";
+		        }
+		    }
 
 
 

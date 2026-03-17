@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Curriculum</title>
+    <title>Academic</title>
     <link rel="stylesheet" href="/welcome.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -21,18 +21,17 @@
 	</div>
 
     <header>
-        <h2>Welcome <span th:text="${user.fullname}"></span></h2>
-        <input id="hidden_studentid" type="hidden" th:value="${user.studentid}">
+        
         <nav class="navbar">
     <div class="nav-menu">
         <nav>
   
     <ul>
-        <li><a href="welcome">Home</a></li>
-        <li><a class="selected" style="color:black" href="#">Curriculum</a></li>
-        <li><a href="progress">Progress</a></li>
-        <li><a href="account">Account</a></li>
-        <li><a href="#">Logout</a></li>
+        <li><a href="index">index</a></li>
+        <li><a class="selected" style="color:black" href="#">Academic</a></li>
+        <li><a href="home/enrollment">Enrollment</a></li>
+        <li><a href="login">Login</a></li>
+        
     </ul>
 </nav>
     </div>

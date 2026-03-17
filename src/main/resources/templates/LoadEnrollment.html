@@ -1,0 +1,32 @@
+<table>
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Subject</th>
+            <th>Units</th>
+            <th>Enroll</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr>
+    	<td colspan =4>First Semester</td>
+    	</tr>
+        <tr th:each="subj : ${subject}" th:if="${subj.semester == 'First'}">
+            <td th:text="${subj.subject_code}"></td>
+            <td th:text="${subj.subject}"></td>
+            <td th:text="${subj.unit}"></td>
+            <td th:text="${subj.id}"></td>
+        </tr>
+    </tbody>
+        <tbody>
+    	<tr>
+    	<td colspan =4>Second Semester</td>
+    	</tr>
+        <tr th:each="subj : ${subject}" th:if="${subj.semester == 'Second'}">
+            <td th:text="${subj.subject_code}"></td>
+            <td th:text="${subj.subject}"></td>
+            <td th:text="${subj.unit}"></td>
+            <td th:text="${subj.id}"></td>
+        </tr>
+    </tbody>
+</table>
